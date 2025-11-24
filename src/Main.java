@@ -6,6 +6,8 @@ import java.util.concurrent.Future;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
+        long start = System.currentTimeMillis();
+
         ExecutorService executor = Executors.newFixedThreadPool(5);
 
         ArrayList<Future<Long>> futures = new ArrayList<>();
@@ -23,5 +25,8 @@ public class Main {
         System.out.println("Grand total of all threads = " + grandTotal);
 
         executor.shutdown();
+        
+        long end = System.currentTimeMillis();
+        System.out.println("Time taken: " + (end - start) + " ms");
     }
 }
