@@ -1,5 +1,7 @@
 public class Main {
     public static void main(String[] args) throws InterruptedException {
+        long start = System.currentTimeMillis();
+
         Thread[] threads = new Thread[1_000];
         long[] totals = new long[1000];
 
@@ -27,5 +29,8 @@ public class Main {
         // commit two
 
         System.out.println("Grand total of all threads = " + grandTotal);
+
+        long end = System.currentTimeMillis();
+        System.out.println("Time taken: " + (end - start) + " ms");
     }
 }
