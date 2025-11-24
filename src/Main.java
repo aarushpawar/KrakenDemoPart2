@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         ExecutorService executor = Executors.newFixedThreadPool(5);
 
         ArrayList<Future<Long>> futures = new ArrayList<>();
@@ -13,6 +14,13 @@ public class Main {
             futures.add(executor.submit(new Counter()));
         }
 
+        long grandTotal = 0;
+
+        for (Future<Long> f : futures) {
+            grandTotal += f.get();
+        }
+
+        System.out.println("Grand total of all threads = " + grandTotal);
 
         executor.shutdown();
     }
