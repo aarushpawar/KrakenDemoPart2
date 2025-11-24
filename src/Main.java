@@ -1,28 +1,19 @@
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Thread[] threads = new Thread[1_000];
-        long[] totals = new long[1000];
+        ExecutorService executor = Executors.newFixedThreadPool(5);
 
-        for (int i = 0; i < threads.length; i++) {
-            final int index = i; // required to use i inside lambda function
+        ArrayList<Future<Long>> futures = new ArrayList<>();
 
-            threads[i] = new Thread(() -> {
-                long total = 0;
-
-                for (int n = 1; n <= 1_000_000; n++) total += n;
-
-                totals[index] = total;
-            });
+        for (int i = 0; i < 1000; i++) {
+            futures.add(executor.submit(new Counter()));
         }
 
-        for (Thread t : threads) t.start();
-        for (Thread t : threads) t.join();
 
-        long grandTotal = 0;
-        for (long t : totals) {
-            grandTotal += t;
-        }
-
-        System.out.println("Grand total of all threads = " + grandTotal);
+        executor.shutdown();
     }
 }
