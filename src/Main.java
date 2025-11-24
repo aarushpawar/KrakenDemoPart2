@@ -24,6 +24,7 @@ public class Main {
         }
 
         // commit one
+        // commit two
 
         System.out.println("Grand total of all threads = " + grandTotal);
     }
